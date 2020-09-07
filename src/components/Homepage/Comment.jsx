@@ -19,7 +19,7 @@ export class Comment extends Component {
   }
   componentDidMount = async () => {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/profile/${this.props.info.username}`,
+      `http://localhost:3002/profile/${this.props.info.username}`,
       {
         method: "GET",
         headers: new Headers({
@@ -36,7 +36,7 @@ export class Comment extends Component {
   };
   deleteComment = async (id) => {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/comments/${id}`,
+      `http://localhost:3002/comments/${id}`,
       {
         method: "DELETE",
       }

@@ -41,7 +41,7 @@ class NavBar extends Component {
   componentDidMount = async () => {
     this.setState({ users: this.props.users });
     let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/user1",
+      "http://localhost:3002/profile/user1",
       {
         method: "GET",
         headers: new Headers({

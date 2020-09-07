@@ -19,7 +19,7 @@ export default class signin extends Component {
   async fetchUsers() {
     let gets = {
       method: "GET",
-      url: "https://striveschool.herokuapp.com/api/profile/",
+      url: "http://localhost:3002/profile/",
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },

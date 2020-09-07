@@ -21,17 +21,10 @@ class Experiences extends Component {
       company: this.state.company,
       startDate: this.state.startDate,
     };
-    /*
-    let postPic = {
-      method: "POST",
-      url: `https://be-linkedin.herokuapp.com/profile/${this.props.user}/experiences/${this.props.id}/picture`,
-      headers: { Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E") },
-      data: this.state.file,
-    };
-    */
+
     let postExp = {
       method: "PUT",
-      url: `https://be-linkedin.herokuapp.com/profile/user1/experience/${this.props.id}`,
+      url: `http://localhost:3002/profile/user1/experience/${this.props.id}`,
       headers: { Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E") },
       data: expe,
     };
@@ -41,7 +34,7 @@ class Experiences extends Component {
 
   deleteExp = async () => {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/profile/user1/experience/${this.props.id}
+      `http://localhost:3002/profile/user1/experience/${this.props.id}
     `,
       {
         method: "DELETE",
@@ -53,11 +46,6 @@ class Experiences extends Component {
   render() {
     return (
       <>
-        {/* <div id='experiences'> */}
-        {/* <div id='header'>
-          <p>Experience</p>
-          <Link to='/addExperience'><FaPlus/></Link>
-        </div> */}
         <div id="content">
           <div id="experience">
             <div>

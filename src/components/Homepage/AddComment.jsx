@@ -20,7 +20,7 @@ export class AddComment extends Component {
   }
   fetchComments = async () => {
     let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/user1",
+      "http://localhost:3002/profile/user1",
       {
         method: "GET",
         headers: new Headers({
@@ -46,7 +46,7 @@ export class AddComment extends Component {
     this.setState({ comments });
   };
   sendComment = async () => {
-    let response = await fetch("https://be-linkedin.herokuapp.com/comments", {
+    let response = await fetch("http://localhost:3002/comments", {
       method: "POST",
       body: JSON.stringify(this.state.comments),
       headers: new Headers({

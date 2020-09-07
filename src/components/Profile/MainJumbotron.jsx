@@ -37,7 +37,7 @@ export class MainJumbotron extends Component {
     }
     this.fetchData();
     let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/" + this.state.username,
+      "http://localhost:3002/profile/" + this.state.username,
       {
         method: "GET",
         headers: new Headers({
@@ -63,7 +63,7 @@ export class MainJumbotron extends Component {
   };
   async fetchData() {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/profile/` + this.state.username,
+      `http://localhost:3002/profile/` + this.state.username,
       {
         method: "GET",
         headers: new Headers({
@@ -87,7 +87,7 @@ export class MainJumbotron extends Component {
 
   downloadCV = async () => {
     try {  
-      window.open("https://be-linkedin.herokuapp.com/profile/"+ this.state.user._id + "/profilePDF")
+      window.open("http://localhost:3002/profile/"+ this.state.user._id + "/profilePDF")
     } 
     catch (error) {
       console.log("This current error" + error + "happened when trying to print the user experiences")      

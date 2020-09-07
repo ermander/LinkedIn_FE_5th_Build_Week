@@ -18,7 +18,7 @@ export default class homeprofile extends Component {
   }
   componentDidMount = async () => {
     let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/user1",
+      "http://localhost:3002/profile/user1",
       {
         method: "GET",
         headers: new Headers({

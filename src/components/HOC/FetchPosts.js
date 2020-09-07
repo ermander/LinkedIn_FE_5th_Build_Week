@@ -21,7 +21,7 @@ function postsData(WrappedComponent) {
       let postsData = {
         method: "GET",
         //url: `https://striveschool.herokuapp.com/api/posts/`,
-        url: `https://be-linkedin.herokuapp.com/posts`,
+        url: `http://localhost:3002/posts`,
         headers: {
           Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
         },

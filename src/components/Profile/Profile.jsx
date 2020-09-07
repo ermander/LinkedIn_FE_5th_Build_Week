@@ -30,7 +30,7 @@ class Profile extends Component {
   }
   componentDidMount = async () => {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/profile/${this.state.username}`,
+      `http://localhost:3002/profile/${this.state.username}`,
       {
         method: "GET",
         headers: new Headers({
@@ -50,40 +50,20 @@ class Profile extends Component {
       this.setState({ username: this.props.match.params.id }, async () => {
         await this.fetchExperience();
       });
-      //this.setState({ loading: true });
-      //await this.fetchExperience();
-      /*
-      this.setState({ loading: true });
-      let response = await fetch(
-        `https://be-linkedin.herokuapp.com/profile/${this.state.username}`,
-        {
-          method: "GET",
-          headers: new Headers({
-            Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-            "Content-type": "application/json",
-          }),
-        }
-      );
-      let parsedJson = await response.json();
-      this.setState({ name: parsedJson.username });
-      this.setState({ username: this.props.match.params.id }, async () => {
-        await this.fetchExperience();
-      });
-      */
     }
   };
 
   async fetchExperience() {
     let experience = {
       method: "GET",
-      url: `https://be-linkedin.herokuapp.com/profile/${this.state.username}/experience`,
+      url: `http://localhost:3002/profile/${this.state.username}/experience`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
     };
     let users = {
       method: "GET",
-      url: `https://be-linkedin.herokuapp.com/profile/`,
+      url: `http://localhost:3002/profile/`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },

@@ -31,7 +31,7 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(`https://be-linkedin.herokuapp.com/profile`, {
+    let response = await fetch(`http://localhost:3002/profile`, {
       method: "GET",
       headers: new Headers({
         Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
@@ -45,7 +45,7 @@ export class MessageBar extends Component {
     });
     this.setState({ connections: parsedJson });
     let messagesResponse = await fetch(
-      "https://striveschool-test.herokuapp.com/api/messages/user18"
+      "http://localhost:3002/messages/user18"
     );
     let messages = await messagesResponse.json();
     console.log(messages);
@@ -55,7 +55,7 @@ export class MessageBar extends Component {
       transports: ["websocket"],
     };
     // this.socket = io("https://striveschool-api.herokuapp.com/", connOpt);
-    this.socket = io("https://striveschool.herokuapp.com/", connOpt);
+    this.socket = io("http://localhost:3002", connOpt);
     this.socket.on("connect", () => {
       console.log("connected!");
       alert("connected");

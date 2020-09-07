@@ -14,7 +14,7 @@ class Feed extends Component {
   };
   componentDidMount = async () => {
     let user = await fetch(
-      "https://striveschool.herokuapp.com/api/profile/me",
+      "http://localhost:3002/profile/me",
       {
         method: "GET",
         headers: new Headers({
@@ -23,7 +23,7 @@ class Feed extends Component {
         }),
       }
     );
-    let fetchPosts = await fetch("https://be-linkedin.herokuapp.com/posts");
+    let fetchPosts = await fetch("http://localhost:3002/posts");
     let posts = await fetchPosts.json();
     this.setState({ posts, loading: false, numberOfPosts: posts.length });
     let userName = await user.json();
