@@ -20,7 +20,7 @@ export class MessageBar extends Component {
       showChatbox: false,
       recipientName: "",
       senderUsername: "",
-      recipientUsername: "gGBWlBzHifoYjo43AAAC",
+      recipientUsername: "2505mcxWdR3W-DkOAAAC",
       message: "",
       messages: [],
       check: true,

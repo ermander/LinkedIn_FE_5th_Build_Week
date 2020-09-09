@@ -12,10 +12,7 @@ function userData(WrappedComponent) {
     async fetchUsers() {
       let usersData = {
         method: "GET",
-        url: `http://localhost:3002/profile`,
-        headers: {
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        },
+        url: `http://localhost:3002/profile`
       };
       let users = await axios(usersData);
       this.setState({ users: users.data }, () => console.log(this.state.users));

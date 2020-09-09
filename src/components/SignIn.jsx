@@ -3,15 +3,16 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { createBrowserHistory } from "history";
 
-
 export default class signin extends Component {
   state = {
     username: "",
+    email: "",
     password: "",
     users: [],
     uValid: false,
     pValid: null,
   };
+  
 
   componentDidMount() {
     this.fetchUsers();
@@ -19,14 +20,33 @@ export default class signin extends Component {
   async fetchUsers() {
     let gets = {
       method: "GET",
-      url: "http://localhost:3002/profile/",
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-      },
+      url: "http://localhost:3002/profile/"
     };
     let users = await axios(gets);
     this.setState({ users: users.data });
     console.log(users);
+  }
+
+  login = async () => {
+    const history = createBrowserHistory()
+    const res = await fetch(`http://localhost:3002/user/login`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      }),
+    })
+    if (res.ok) {
+      console.log(res)
+      const json = await res.json()
+      localStorage.setItem("accessToken", json.token)
+      localStorage.setItem("refreshToken", json.refreshToken)
+      history.push("/myNetwork")
+      window.location.reload()
+    }
   }
 
   render() {
@@ -65,7 +85,7 @@ export default class signin extends Component {
                       this.setState({ uValid: false,});
                     }
                   });
-                  this.setState({ username: e.target.value });
+                  this.setState({ email: e.target.value });
                 }}
                 className="mb-3"
                 type="email"
@@ -97,21 +117,7 @@ export default class signin extends Component {
             <Button
               className="w-100"
               variant="primary"
-              onClick={() => {
-                this.state.users.map((element) => {
-                  let ch = false;
-                  if (
-                    element.name === this.state.username &&
-                    element.surname === this.state.password
-                  ) {
-                    ch = true;
-                  }
-                  if (ch) {
-                    this.props.history.push(`/feed/${element.username}`);
-                  } else {
-                  }
-                });
-              }}
+              onClick={this.login}
             >
               Sign in
             </Button>
