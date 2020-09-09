@@ -1,8 +1,8 @@
-import React, { Component } from "./node_modules/react";
+import React, { Component } from "react";
 import "../../styles/MessageBar.css";
-import { TiEdit } from "./node_modules/react-icons/ti";
-import { BsThreeDots } from "./node_modules/react-icons/bs";
-import { MdClose, MdSend } from "./node_modules/react-icons/md";
+import { TiEdit } from "react-icons/ti";
+import { BsThreeDots } from "react-icons/bs";
+import { MdClose, MdSend } from "react-icons/md";
 import io from "socket.io-client";
 
 const connOpt = {
