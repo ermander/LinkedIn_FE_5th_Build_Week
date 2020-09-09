@@ -11,7 +11,7 @@ import { FiEdit, FiVideo } from "react-icons/fi";
 import { GrCamera } from "react-icons/gr";
 import { AiOutlineFileText } from "react-icons/ai";
 import Posts from "./Posts";
-import MessageBar from "../messaging/MessageBar";
+import MessageBar from "../Messaging/MessageBar";
 export default class Homepage extends Component {
   state = {
     showModal: false,

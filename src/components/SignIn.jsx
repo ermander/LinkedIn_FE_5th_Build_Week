@@ -10,7 +10,7 @@ export default class signin extends Component {
     password: "",
     users: [],
     uValid: false,
-    pValid: null,
+    pValid: null
   };
   
 
@@ -46,6 +46,8 @@ export default class signin extends Component {
       localStorage.setItem("refreshToken", json.refreshToken)
       history.push("/myNetwork")
       window.location.reload()
+    }else{
+      this.state.login=false
     }
   }
 
