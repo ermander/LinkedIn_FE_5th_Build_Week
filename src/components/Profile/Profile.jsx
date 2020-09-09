@@ -32,11 +32,7 @@ class Profile extends Component {
     let response = await fetch(
       `http://localhost:3002/profile/${this.state.username}`,
       {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-          "Content-type": "application/json",
-        }),
+        method: "GET"
       }
     );
     let parsedJson = await response.json();
