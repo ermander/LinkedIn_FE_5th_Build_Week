@@ -46,8 +46,6 @@ export default class signin extends Component {
       localStorage.setItem("refreshToken", json.refreshToken)
       history.push("/myNetwork")
       window.location.reload()
-    }else{
-      this.state.login=false
     }
   }
 
