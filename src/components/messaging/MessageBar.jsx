@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React, { Component } from "./node_modules/react";
 import "../../styles/MessageBar.css";
-import { TiEdit } from "react-icons/ti";
-import { BsThreeDots } from "react-icons/bs";
-import { MdClose, MdSend } from "react-icons/md";
+import { TiEdit } from "./node_modules/react-icons/ti";
+import { BsThreeDots } from "./node_modules/react-icons/bs";
+import { MdClose, MdSend } from "./node_modules/react-icons/md";
 import io from "socket.io-client";
 
 const connOpt = {
   transports: ["websocket"],
-}
-let socket = io("http://localhost:3002", connOpt)
-
+};
+let socket = io("http://localhost:3002", connOpt);
 
 export class MessageBar extends Component {
   constructor(props) {
@@ -36,9 +35,8 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
 
-
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3002/profile`)
+    let response = await fetch(`http://localhost:3002/profile`);
 
     let parsedJson = await response.json();
     parsedJson.forEach((element) => {
@@ -47,9 +45,7 @@ export class MessageBar extends Component {
     });
 
     this.setState({ connections: parsedJson });
-    let messagesResponse = await fetch(
-      "http://localhost:3002"
-    );
+    let messagesResponse = await fetch("http://localhost:3002");
 
     let messages = await messagesResponse.json();
     console.log(messages);
@@ -94,18 +90,18 @@ export class MessageBar extends Component {
 
   sendMessage = (e) => {
     e.preventDefault();
-    this.setState({ senderUsername: socket.id })
+    this.setState({ senderUsername: socket.id });
     if (this.state.message !== "") {
-      console.log(this.state.senderUsername)
+      console.log(this.state.senderUsername);
       socket.emit("privateMessage", {
         from: this.state.senderUsername,
         to: this.state.recipientUsername,
-        text: this.state.message      
+        text: this.state.message,
       });
       this.setState({ message: "" });
     }
   };
-  
+
   render() {
     return (
       <>
