@@ -3,34 +3,35 @@ import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import Posts from "./Posts";
 import "../../styles/HomePage.css";
 import FetchPosts from "../HOC/FetchPosts";
-// import UploadPic from '../UploadPic'
+import authAxios from "../HOC/http";
+
+const BASE_URL = "http://localhost:3002";
 
 class Feed extends Component {
   state = {
     posts: [],
     numberOfPosts: "",
-    username: [],
+    users: [],
+    user: {
+      experiences: [],
+    },
+    show: false,
+    searchKey: "",
     loading: true,
+    name: "",
   };
   componentDidMount = async () => {
-    let user = await fetch(
-      "http://localhost:3002/profile/me",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-          "Content-type": "application/json",
-        }),
-      }
+    const usersData = await authAxios.get(`${BASE_URL}/user`);
+
+    const currentUserData = await authAxios.get(
+      `${BASE_URL}/user/${this.props.match.params.id}`
     );
-    let fetchPosts = await fetch("http://localhost:3002/posts");
-    let posts = await fetchPosts.json();
-    this.setState({ posts, loading: false, numberOfPosts: posts.length });
-    let userName = await user.json();
 
     this.setState({
-      username: userName,
-      // posts: this.props.posts,
+      // experiences: expData,
+      users: usersData.data,
+      user: currentUserData.data,
+      loading: false,
     });
   };
   //

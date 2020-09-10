@@ -10,9 +10,8 @@ export default class signin extends Component {
     password: "",
     users: [],
     uValid: false,
-    pValid: null
+    pValid: null,
   };
-  
 
   componentDidMount() {
     this.fetchUsers();
@@ -20,7 +19,7 @@ export default class signin extends Component {
   async fetchUsers() {
     let gets = {
       method: "GET",
-      url: "http://localhost:3002/profile/"
+      url: "http://localhost:3002/profile/",
     };
     let users = await axios(gets);
     this.setState({ users: users.data });
@@ -28,7 +27,7 @@ export default class signin extends Component {
   }
 
   login = async () => {
-    const history = createBrowserHistory()
+    const history = createBrowserHistory();
     const res = await fetch(`http://localhost:3002/user/login`, {
       headers: {
         "Content-Type": "application/json",
@@ -38,16 +37,16 @@ export default class signin extends Component {
         email: this.state.email,
         password: this.state.password,
       }),
-    })
+    });
     if (res.ok) {
-      console.log(res)
-      const json = await res.json()
-      localStorage.setItem("accessToken", json.token)
-      localStorage.setItem("refreshToken", json.refreshToken)
-      history.push("/myNetwork")
-      window.location.reload()
+      console.log(res);
+      const json = await res.json();
+      localStorage.setItem("accessToken", json.token);
+      localStorage.setItem("refreshToken", json.refreshToken);
+      history.push("/myNetwork");
+      window.location.reload();
     }
-  }
+  };
 
   render() {
     return (
@@ -78,11 +77,11 @@ export default class signin extends Component {
                   this.state.users.map((element) => {
                     if (e.target.value.length > 2) {
                       if (element.name === e.target.value) {
-                        this.setState({ uValid: true,});
+                        this.setState({ uValid: true });
                         console.log(this.state.uInvalid);
-                      } 
+                      }
                     } else {
-                      this.setState({ uValid: false,});
+                      this.setState({ uValid: false });
                     }
                   });
                   this.setState({ email: e.target.value });
@@ -99,12 +98,12 @@ export default class signin extends Component {
                   this.state.users.map((element) => {
                     if (e.target.value.length > 2) {
                       if (element.surname === e.target.value) {
-                        this.setState({ pValid : true});
+                        this.setState({ pValid: true });
                         console.log(this.state.pValid);
-                      } 
+                      }
                     } else {
-                      this.setState({ pValid: null, });
-                      console.log(this.state.pValid)
+                      this.setState({ pValid: null });
+                      console.log(this.state.pValid);
                     }
                   });
 
@@ -114,11 +113,7 @@ export default class signin extends Component {
                 placeholder="Password"
               />
             </Form.Group>
-            <Button
-              className="w-100"
-              variant="primary"
-              onClick={this.login}
-            >
+            <Button className="w-100" variant="primary" onClick={this.login}>
               Sign in
             </Button>
             <div className="mt-5">

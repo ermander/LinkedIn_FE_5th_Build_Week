@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import MyNetworkProfiles from "./MyNetworkProfiles";
 import "../../styles/MyNetwork.css";
 import NavBar from "../NavBar";
+import authAxios from "../HOC/http";
 
 class MyNetwork extends React.Component {
   state = {
@@ -18,19 +19,10 @@ class MyNetwork extends React.Component {
   }
 
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3002/profile`, {
-      method: "GET",
-      headers: new Headers({
-        Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
-        "Content-type": "application/json",
-      }),
-    });
-    let parsedJson = await response.json();
-    parsedJson.forEach((element) => {
-      const base64 = this.bufferToBase64(element.image.data);
-      element.image = base64;
-    });
-    this.setState({ data: parsedJson });
+    const resp = await authAxios.get(`http://localhost:3002/user/`);
+    console.log(resp);
+
+    this.setState({ data: resp.data });
   };
 
   render() {

@@ -39,28 +39,26 @@ class NavBar extends Component {
   }
 
   componentDidMount = async () => {
-    try {
-      this.setState({ users: this.props.users });
-      let response = await fetch(
-        "http://localhost:3002/profile/user1",
-        {
-          method: "GET",
-          headers: new Headers({
-            Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-            "Content-type": "application/json",
-          }),
-        }
-      );
-      let parsedJson = await response.json();
-
-      const base64 = this.bufferToBase64(parsedJson[0].image.data);
-      
-    } catch (error) {
-      console.log(error)      
-    }
-    // this.setState({ image: base64 });
-    this.setState({ image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3Tw1OEmiebs&psig=AOvVaw3zqdsgaHAhgS6rCtqs_C7N&ust=1599561406702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjN5t7s1usCFQAAAAAdAAAAABAD"})
-    console.log(this.state.image)
+    // try {
+    //   this.setState({ users: this.props.users });
+    //   let response = await fetch(
+    //     "http://localhost:3002/profile/user1",
+    //     {
+    //       method: "GET",
+    //       headers: new Headers({
+    //         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+    //         "Content-type": "application/json",
+    //       }),
+    //     }
+    //   );
+    //   let parsedJson = await response.json();
+    //   const base64 = this.bufferToBase64(parsedJson[0].image.data);
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    // // this.setState({ image: base64 });
+    // this.setState({ image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3Tw1OEmiebs&psig=AOvVaw3zqdsgaHAhgS6rCtqs_C7N&ust=1599561406702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjN5t7s1usCFQAAAAAdAAAAABAD"})
+    // console.log(this.state.image)
   };
   render() {
     return (

@@ -16,25 +16,23 @@ export default class homeprofile extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    try {
-      let response = await fetch(
-        "http://localhost:3002/profile/user1",
-        {
-          method: "GET",
-          headers: new Headers({
-            Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-            "Content-type": "application/json",
-          }),
-        }
-      );
-      let parsedJson = await response.json();
-      let user = parsedJson[0];
-      const base64 = this.bufferToBase64(user.image.data);      
-    } catch (error) {
-      
-    }
-    
-    this.setState({ image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3Tw1OEmiebs&psig=AOvVaw3zqdsgaHAhgS6rCtqs_C7N&ust=1599561406702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjN5t7s1usCFQAAAAAdAAAAABAD" });
+    // try {
+    //   let response = await fetch(
+    //     "http://localhost:3002/profile/user1",
+    //     {
+    //       method: "GET",
+    //       headers: new Headers({
+    //         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+    //         "Content-type": "application/json",
+    //       }),
+    //     }
+    //   );
+    //   let parsedJson = await response.json();
+    //   let user = parsedJson[0];
+    //   const base64 = this.bufferToBase64(user.image.data);
+    // } catch (error) {
+    // }
+    // this.setState({ image: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D3Tw1OEmiebs&psig=AOvVaw3zqdsgaHAhgS6rCtqs_C7N&ust=1599561406702000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjN5t7s1usCFQAAAAAdAAAAABAD" });
   };
   render() {
     return (

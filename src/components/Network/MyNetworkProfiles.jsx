@@ -21,7 +21,7 @@ const MyNetworkProfiles = (data) => {
         <Card.Body className="d-flex flex-column">
           <Card.Title>{data.data.name + " " + data.data.surname}</Card.Title>
           <Card.Text>{data.data.bio}</Card.Text>
-          <Link to={"/profile/" + data.data.username}>
+          <Link to={"/profile/" + data.data._id}>
             <Button
               className="myNetworkButtons"
               variant="outline"
