@@ -188,7 +188,7 @@ export class MessageBar extends Component {
                     alt="image"
                   />
                   <a onClick={() => this.openChatbox(connection.name, connection.username)}>
-                    {connection.name}
+                    {connection.name} {connection.surname}
                   </a>
                 </div>
               );
