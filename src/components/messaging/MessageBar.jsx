@@ -26,6 +26,7 @@ export class MessageBar extends Component {
       recipientUsername: "",
       message: "",
       messages: [],
+      currentChatMessages: [],
       check: true,
     };
   }
@@ -50,6 +51,7 @@ export class MessageBar extends Component {
     this.setState({ connections: parsedJson });
 
     const token = localStorage.getItem("accessToken")
+    console.log("This is the socket id: " + socket.id)
     this.setState({
       senderToken: token,
       senderSocketID: socket.id
@@ -85,11 +87,35 @@ export class MessageBar extends Component {
   // Set the _id of the current logged user (senderID)
   setCurrentLogged_id = async() => {
     const token = localStorage.getItem("accessToken")
-    const response = await fetch("http://localhost:3002/user/bytoken" + token)
+    const response = await fetch("http://localhost:3002/user/bytoken/" + token)
     const parsedResponse = await response.json()
     console.log("The username is : " + parsedResponse._id)
     this.setState({
       senderID: parsedResponse._id
+    })
+  }
+
+  setCurrentOpenChat_id = async() => {
+    const username = this.state.recipientUsername
+    const response = await fetch("http://localhost:3002/user/byUsername/" + username)
+    const parsedResponse = await response.json()
+    console.log(parsedResponse._id)
+    this.setState({
+      recipientID: parsedResponse._id
+  })
+}
+
+  setChatMessages = async() => {
+    const allMessages = this.state.messages
+    const currentMessages = allMessages.filter((message) => 
+      (message.from === this.state.recipientID && message.to === this.state.senderID)
+      ||
+      (message.from === this.state.senderID && message.to === this.state.recipientID)
+
+    )
+    console.log(currentMessages)
+    this.setState({
+      currentChatMessages: currentMessages
     })
   }
 
@@ -112,20 +138,13 @@ export class MessageBar extends Component {
       }
     );
 
-    const setCurrentOpenChat_id = async() => {
-      const response = await fetch("http://localhost:3002/user/" + this.state.recipientUsername)
-      const parsedResponse = await response.json()
-      console.log(parsedResponse._id)
-      this.setState({
-        recipientID: parsedResponse._id
-    })
-  }
-
+  this.setCurrentOpenChat_id()
   this.setCurrentLogged_id()
+  this.setChatMessages()
 };
 
   closeChatbox = () => {
-    this.setState({ showChatbox: false, recipientName: "" });
+    this.setState({ showChatbox: false, recipientName: "", currentChatMessages: [] });
   };
 
 
@@ -161,7 +180,7 @@ export class MessageBar extends Component {
             </div>
           </div>
           <div id="connections">
-            {this.state.connections.map((connection) => {
+            {this.state.connections.filter((connection) => (connection._id !== this.state.senderID)).map((connection) => {
               return (
                 <div id="connection">
                   <img
@@ -189,11 +208,11 @@ export class MessageBar extends Component {
             </div>
             <div id="chat">
               <div id="messages">
-                {this.state.messages.map((message) => {
+                {this.state.currentChatMessages.map((message) => {
                   return (
                     <p
                       className={
-                        message.from === this.state.senderUsername
+                        message.from === this.state.senderID
                           ? "text-right"
                           : "text-left"
                       }
