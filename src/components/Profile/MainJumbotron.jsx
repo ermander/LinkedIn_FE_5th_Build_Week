@@ -12,10 +12,10 @@ import { FaCamera, FaEye } from "react-icons/fa";
 import { RiPencilLine } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { withRouter } from "react-router-dom";
+import authAxios from "../HOC/http";
 export class MainJumbotron extends Component {
   state = {
     data: [],
-    username: this.props.match.params.id,
     show: false,
     user: "",
     userImage: "",
@@ -31,51 +31,30 @@ export class MainJumbotron extends Component {
   }
 
   componentDidMount = async () => {
-    {
-      console.log("USERNAME", this.state.username);
-    }
     this.fetchData();
-    let response = await fetch(
-      "http://localhost:3002/profile/" + this.state.username,
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-          "Content-type": "application/json",
-        }),
-      }
-    );
-    let parsedJson = await response.json();
-    let user = parsedJson[0];
-    let base64 = this.bufferToBase64(user.image.data);
-    user.image = base64;
-    this.setState({ user });
+
+    // let parsedJson = await response.json();
+    // let user = parsedJson[0];
+    // let base64 = this.bufferToBase64(user.image.data);
+    // user.image = base64;
+    // this.setState({ user });
   };
 
   componentDidUpdate = async (prevState) => {
-    if (this.state.username !== this.props.username) {
-      console.log("HEREHRERE");
-      this.setState({ username: this.props.username }, async () => {
-        await this.fetchData();
-      });
-    }
+    // if (this.state.username !== this.props.username) {
+    //   console.log("HEREHRERE");
+    //   this.setState({ username: this.props.username }, async () => {
+    //     await this.fetchData();
+    //   });
+    // }
   };
   async fetchData() {
-    let response = await fetch(
-      `http://localhost:3002/profile/` + this.state.username,
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-          "Content-type": "application/json",
-        }),
-      }
+    const userData = await authAxios.get(
+      `http://localhost:3002/user/${this.props.match.params.id}`
     );
-    let parsedJson = await response.json();
-    let user = parsedJson[0];
-    let base64 = this.bufferToBase64(user.image.data);
-    user.image = base64;
-    this.setState({ user });
+    this.setState({
+      user: userData.data,
+    });
   }
   verifyProfile = async () => {
     console.log(this.state.data);
@@ -84,14 +63,6 @@ export class MainJumbotron extends Component {
     }
   };
 
-  downloadCV = async () => {
-    try {  
-      window.open("http://localhost:3002/profile/"+ this.state.user._id + "/profilePDF")
-    } 
-    catch (error) {
-      console.log("This current error" + error + "happened when trying to print the user experiences")      
-    }
-  };
   render() {
     return (
       <>
@@ -139,9 +110,7 @@ export class MainJumbotron extends Component {
                     Something else
                   </Dropdown.Item>
                 </DropdownButton>
-                <Button variant="outline-info" onClick={this.downloadCV}>
-                  Download CV
-                </Button>
+
                 <IconContext.Provider value={{ className: "editIcon" }}>
                   <div>
                     <RiPencilLine />

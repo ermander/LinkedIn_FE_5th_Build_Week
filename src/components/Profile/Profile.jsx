@@ -5,80 +5,83 @@ import SideBar from "./SideBar";
 import { Container, Row, Col, Dropdown } from "react-bootstrap";
 import NavBar from "../NavBar";
 import Experiences from "./Experiences";
-import axios from "axios";
-import { Link } from "react-router-dom";
+//import axios from "axios";
+import axios from "../HOC/http";
+
+import { Link, withRouter } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../../styles/ProfilePage.css";
 
+const BASE_URL = "http://localhost:3002";
+
 class Profile extends Component {
   state = {
-    username: this.props.match.params.id,
     users: [],
-    experiences: [],
+    user: {
+      experiences: [],
+    },
     show: false,
     searchKey: "",
     loading: true,
     name: "",
   };
-  bufferToBase64(buf) {
-    var binstr = Array.prototype.map
-      .call(buf, function (ch) {
-        return String.fromCharCode(ch);
-      })
-      .join("");
-    return btoa(binstr);
-  }
+
   componentDidMount = async () => {
-    let response = await fetch(
-      `http://localhost:3002/profile/${this.state.username}`,
-      {
-        method: "GET"
-      }
-    );
-    let parsedJson = await response.json();
-    this.setState({ name: parsedJson.username });
-    console.log(parsedJson);
-    this.fetchExperience();
+    this.fetchData();
   };
-  componentDidUpdate = async (prevState) => {
-    if (this.props.match.params.id !== this.state.username) {
-      console.log("hello");
-      this.setState({ username: this.props.match.params.id }, async () => {
-        await this.fetchExperience();
-      });
+
+  fetchData = async () => {
+    // 1) mi prendo i miei dati => axiox.get (user / ) <= prenderlo dall'url!!!!
+    const usersData = await axios.get(`${BASE_URL}/user`);
+    // 2) fetchare le exp
+    const currentUserData = await axios.get(
+      `${BASE_URL}/user/${this.props.match.params.id}`
+    );
+
+    this.setState({
+      // experiences: expData,
+      users: usersData.data,
+      user: currentUserData.data,
+      loading: false,
+    });
+  };
+
+  componentDidUpdate = async (prevProps, prevState) => {
+    if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.fetchData();
     }
   };
 
-  async fetchExperience() {
-    let experience = {
-      method: "GET",
-      url: `http://localhost:3002/profile/${this.state.username}/experience`,
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-      },
-    };
-    let users = {
-      method: "GET",
-      url: `http://localhost:3002/profile/`,
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-      },
-    };
-    let experiences = await axios(experience);
-    let experiencesData = experiences.data;
-    experiencesData.forEach((experience) => {
-      if (experience.image) {
-        const base64 = this.bufferToBase64(experience.image.data);
-        experience.image = base64;
-      }
-    });
-    let usersData = await axios(users);
-    this.setState({
-      experiences: experiencesData,
-      users: usersData.data,
-      loading: false,
-    });
-  }
+  // async fetchExperience() {
+  //   let experience = {
+  //     method: "GET",
+  //     url: `http://localhost:3002/profile/${this.state.username}/experience`,
+  //     headers: {
+  //       Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+  //     },
+  //   };
+  //   let users = {
+  //     method: "GET",
+  //     url: `http://localhost:3002/profile/`,
+  //     headers: {
+  //       Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+  //     },
+  //   };
+  //   let experiences = await axios(experience);
+  //   let experiencesData = experiences.data;
+  //   experiencesData.forEach((experience) => {
+  //     if (experience.image) {
+  //       const base64 = this.bufferToBase64(experience.image.data);
+  //       experience.image = base64;
+  //     }
+  //   });
+  //   let usersData = await axios(users);
+  //   this.setState({
+  //     experiences: experiencesData,
+  //     users: usersData.data,
+  //     loading: false,
+  //   });
+  // }
   render() {
     return (
       <>
@@ -91,7 +94,7 @@ class Profile extends Component {
           <Container className="mt-5 pt-3">
             <Row>
               <Col className="col-8">
-                <MainJumbotron username={this.state.username} />
+                <MainJumbotron />
                 <div id="experiences">
                   <div id="header">
                     <p>Experience</p>
@@ -101,7 +104,7 @@ class Profile extends Component {
                       </Link>
                     )}
                   </div>
-                  {this.state.experiences.map((element) => {
+                  {this.state.user.experiences.map((element) => {
                     console.log(element);
                     return (
                       <Experiences
@@ -127,4 +130,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default withRouter(Profile);

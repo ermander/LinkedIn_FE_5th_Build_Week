@@ -12,7 +12,7 @@ function userData(WrappedComponent) {
     async fetchUsers() {
       let usersData = {
         method: "GET",
-        url: `http://localhost:3002/profile`
+        url: `http://localhost:3002/user`,
       };
       let users = await axios(usersData);
       this.setState({ users: users.data }, () => console.log(this.state.users));

@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Image } from "react-bootstrap";
 import { FaQuestionCircle } from "react-icons/fa";
 import PageViewer from "./PageViewer";
+import authAxios from "../HOC/http";
 
 class SideBar extends React.Component {
   state = {
@@ -17,25 +18,11 @@ class SideBar extends React.Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3002/profile`, {
-      method: "GET",
-      headers: new Headers({
-        Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
-        "Content-type": "application/json",
-      }),
-    });
-    let parsedJson = await response.json();
-    parsedJson.forEach((element) => {
-      const base64 = this.bufferToBase64(element.image.data);
-      element.image = base64;
-    });
-    let filteredArray = parsedJson.filter(
-      (element) => element.username !== this.state.mainUser
-    );
-    console.log(parsedJson);
-    this.setState({ data: filteredArray });
-  };
+    const resp = await authAxios.get(`http://localhost:3002/user/`);
+    console.log(resp);
 
+    this.setState({ data: resp.data });
+  };
   render() {
     console.log(this.state.data.slice(0, 6));
     return (

@@ -122,15 +122,12 @@ export default class Homepage extends Component {
   //
   deletePost = async (id) => {
     this.setState({ loading: true });
-    let response = await fetch(
-      `http://localhost:3002/posts/${id}`,
-      {
-        method: "DELETE",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        }),
-      }
-    );
+    let response = await fetch(`http://localhost:3002/posts/${id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+      }),
+    });
     if (response.ok) {
       this.fetchData();
       // alert("Post deleted Sucessfully");

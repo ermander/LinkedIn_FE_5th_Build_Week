@@ -39,7 +39,6 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
 
-
   componentDidMount = async () => {
     // Setting the username of the current user logged into the application
     this.setCurrentLogged_id()
@@ -141,12 +140,12 @@ export class MessageBar extends Component {
       socket.emit("privateMessage", {
         from: this.state.senderToken,
         to: this.state.recipientUsername,
-        text: this.state.message      
+        text: this.state.message,
       });
       this.setState({ message: "" });
     }
   };
-  
+
   render() {
     return (
       <>
