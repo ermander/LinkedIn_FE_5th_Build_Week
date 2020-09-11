@@ -44,7 +44,11 @@ export default class signin extends Component {
       const json = await res.json()
       localStorage.setItem("accessToken", json.token)
       localStorage.setItem("refreshToken", json.refreshToken)
-      history.push("/myNetwork")
+      const currentUserToken = localStorage.getItem("accessToken")
+      const response = await fetch("http://localhost:3002/user/" + currentUserToken)
+      const parsedResponse = await response.json()
+
+      history.push("/profile/" + parsedResponse._id)
       window.location.reload()
     }
   }

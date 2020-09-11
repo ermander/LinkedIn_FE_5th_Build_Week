@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const authAxios = axios.create({ 
-    baseURL="http://localhost:3002/users",
+    baseURL:"http://localhost:3002/users",
     headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
@@ -9,7 +9,7 @@ const authAxios = axios.create({
 
 // Refresh token flow
 
-authAxios.interceptors.response.use((response) = response, function(error){
+authAxios.interceptors.response.use((response) => response, function(error){
     
     const originalRequest = error.config
     if(error.response.status === 401 && originalRequest.url === "/refreshToken"){
@@ -22,12 +22,12 @@ authAxios.interceptors.response.use((response) = response, function(error){
         return authAxios.post("/refreshToken", {
             refreshToken, 
         })
-        .then(response => {
-            if(response.status === 200){
+        .then(res => {
+            if(res.status === 200){
 
                 // Setting my new token inside my local storage
-                localStorage.setItem("accessToken", response.data.accessToken)
-                localStorage.setItem("refreshToken", response.data.refreshToken)
+                localStorage.setItem("accessToken", res.data.accessToken)
+                localStorage.setItem("refreshToken", res.data.refreshToken)
 
                 // Retry again the original request with the brand new access token in Authorization header
 
@@ -39,3 +39,5 @@ authAxios.interceptors.response.use((response) = response, function(error){
     }
     return Promise.reject(error)
 })
+
+export default authAxios 
