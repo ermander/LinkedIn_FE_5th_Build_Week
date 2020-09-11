@@ -6,11 +6,12 @@ import { Container, Row, Col, Dropdown } from "react-bootstrap";
 import NavBar from "../NavBar";
 import Experiences from "./Experiences";
 //import axios from "axios";
-import axios from "../HOC/http";
+import axios from "axios";
 
 import { Link, withRouter } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../../styles/ProfilePage.css";
+import userData from "../HOC/FetchUsers";
 
 const BASE_URL = "http://localhost:3002";
 
@@ -32,17 +33,20 @@ class Profile extends Component {
 
   fetchData = async () => {
     // 1) mi prendo i miei dati => axiox.get (user / ) <= prenderlo dall'url!!!!
-    const usersData = await axios.get(`${BASE_URL}/user`);
+    const usersData = await axios.get(`${BASE_URL}/user/`);
+    console.log(usersData)
     // 2) fetchare le exp
     const currentUserData = await axios.get(
       `${BASE_URL}/user/${this.props.match.params.id}`
     );
+    console.log("oisdhfosdihf " + currentUserData)
 
     this.setState({
       // experiences: expData,
       users: usersData.data,
       user: currentUserData.data,
       loading: false,
+      show: true
     });
   };
 
