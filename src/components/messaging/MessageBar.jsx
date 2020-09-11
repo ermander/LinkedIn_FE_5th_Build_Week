@@ -85,7 +85,7 @@ export class MessageBar extends Component {
   // Set the _id of the current logged user (senderID)
   setCurrentLogged_id = async() => {
     const token = localStorage.getItem("accessToken")
-    const response = await fetch("http://localhost:3002/user/" + token)
+    const response = await fetch("http://localhost:3002/user/bytoken" + token)
     const parsedResponse = await response.json()
     console.log("The username is : " + parsedResponse._id)
     this.setState({
