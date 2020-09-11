@@ -186,18 +186,18 @@ export default class Homepage extends Component {
                   <img src="https://i.stack.imgur.com/h6viz.gif" alt="" />
                 </div>
               ) : (
-                this.state.posts.map((element, i) => {
-                  return (
-                    <Posts
-                      user={this.state.username}
-                      delPost={this.deletePost}
-                      editPost={this.editPost}
-                      post={element}
-                      key={i}
-                    />
-                  );
-                })
-              )}
+                  this.state.posts.map((element, i) => {
+                    return (
+                      <Posts
+                        user={this.state.username}
+                        delPost={this.deletePost}
+                        editPost={this.editPost}
+                        post={element}
+                        key={i}
+                      />
+                    );
+                  })
+                )}
 
               <Modal
                 onchange={(e) =>

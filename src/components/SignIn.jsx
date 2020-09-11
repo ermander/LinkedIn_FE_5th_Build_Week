@@ -43,9 +43,9 @@ export default class signin extends Component {
       const json = await res.json();
       localStorage.setItem("accessToken", json.token);
       localStorage.setItem("refreshToken", json.refreshToken);
-      
+
       const currentUserToken = localStorage.getItem("accessToken")
-      const response = await fetch("http://localhost:3002/user/bytoken/" + currentUserToken )
+      const response = await fetch("http://localhost:3002/user/bytoken/" + currentUserToken)
       const parsedResponse = await response.json()
       history.push("http://localhost:3000/profile/" + parsedResponse._id);
       window.location.reload();
@@ -120,6 +120,7 @@ export default class signin extends Component {
             <Button className="w-100" variant="primary" onClick={this.login}>
               Sign in
             </Button>
+            <a href={`http://localhost:3001/user/auth/facebook`}><button>Signin in with Facebook</button></a>
             <div className="mt-5">
               <a>Forgot Your Password ?</a>
               <p className="mt-3">
