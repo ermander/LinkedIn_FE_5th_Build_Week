@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Footer from "../Footer";
 import MainJumbotron from "./MainJumbotron";
 import SideBar from "./SideBar";
-import { Container, Row, Col, Dropdown } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../NavBar";
 import Experiences from "./Experiences";
 //import axios from "axios";
