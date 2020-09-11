@@ -43,7 +43,7 @@ export default class signin extends Component {
       const json = await res.json();
       localStorage.setItem("accessToken", json.token);
       localStorage.setItem("refreshToken", json.refreshToken);
-      history.push("/myNetwork");
+      history.push("http://localhost:3000/profile/5f58d8e28c8f6be37c035dc6");
       window.location.reload();
     }
   };

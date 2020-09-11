@@ -32,12 +32,7 @@ const PageViewer = (data) => {
           )}
         </Col>
         <Col className="col-7 d-flex flex-column">
-          {/* {if (data.data.username === user7){
-                        console.log("same user")
-                    }else{
-                        
-                    }} */}
-          <Link className="nav-link" to={"/profile/" + data.data.username}>
+          <Link className="nav-link" to={"/profile/" + data.data._id}>
             {data.data.name + " " + data.data.surname}
           </Link>
           <span>{data.data.title}</span>
