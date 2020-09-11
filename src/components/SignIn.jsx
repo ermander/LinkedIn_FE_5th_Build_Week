@@ -39,16 +39,12 @@ export default class signin extends Component {
       }),
     });
     if (res.ok) {
-      console.log(res)
-      const json = await res.json()
-      localStorage.setItem("accessToken", json.token)
-      localStorage.setItem("refreshToken", json.refreshToken)
-      const currentUserToken = localStorage.getItem("accessToken")
-      const response = await fetch("http://localhost:3002/user/" + currentUserToken)
-      const parsedResponse = await response.json()
-
-      history.push("/profile/" + parsedResponse._id)
-      window.location.reload()
+      console.log(res);
+      const json = await res.json();
+      localStorage.setItem("accessToken", json.token);
+      localStorage.setItem("refreshToken", json.refreshToken);
+      history.push("http://localhost:3000/profile/5f58d8e28c8f6be37c035dc6");
+      window.location.reload();
     }
   };
 
