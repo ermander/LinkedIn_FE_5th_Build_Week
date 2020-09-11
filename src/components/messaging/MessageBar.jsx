@@ -140,7 +140,7 @@ export class MessageBar extends Component {
 
   this.setCurrentOpenChat_id()
   this.setCurrentLogged_id()
-  this.setChatMessages()
+  setTimeout(this.setChatMessages, 3000)
 };
 
   closeChatbox = () => {
