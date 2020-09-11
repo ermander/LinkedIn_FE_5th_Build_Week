@@ -53,7 +53,7 @@ class Posts extends Component {
 
   render() {
     return (
-      <Container className="mt-2 home px-0 forPostsShadow">
+      <Container className="mt-2 home px-0 shadow">
         <div className="p-1" id="postHeader">
           <div>
             <img
