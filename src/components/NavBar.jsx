@@ -17,6 +17,7 @@ import {
 import { RiBriefcaseLine } from "react-icons/ri";
 import { MdMessage } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
 import photo from "../images/photo.png";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -140,13 +141,10 @@ class NavBar extends Component {
               <IoMdNotificationsOutline style={{ fontSize: "20px" }} />
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
-            <Link className="nav-link" to="/profile/user1">
-              <img
-                src={`data:image/jpeg;base64,${this.state.image}`}
-                style={{ borderRadius: "50%", height: "20px", width: "20px" }}
-              ></img>
+            <Link className="nav-link" to="/">
+              <IoIosLogOut style={{ fontSize: "20px" }} />
               <div style={{ fontSize: "13px" }}>
-                Me{" "}
+                Log Out
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"

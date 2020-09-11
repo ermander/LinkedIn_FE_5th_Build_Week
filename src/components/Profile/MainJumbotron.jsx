@@ -41,12 +41,7 @@ export class MainJumbotron extends Component {
   };
 
   componentDidUpdate = async (prevState) => {
-    // if (this.state.username !== this.props.username) {
-    //   console.log("HEREHRERE");
-    //   this.setState({ username: this.props.username }, async () => {
-    //     await this.fetchData();
-    //   });
-    // }
+    this.fetchData();
   };
   async fetchData() {
     const userData = await authAxios.get(
