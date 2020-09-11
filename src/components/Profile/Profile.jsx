@@ -2,18 +2,15 @@ import React, { Component } from "react";
 import Footer from "../Footer";
 import MainJumbotron from "./MainJumbotron";
 import SideBar from "./SideBar";
-import { Container, Row, Col, Dropdown } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../NavBar";
 import Experiences from "./Experiences";
 //import axios from "axios";
 import axios from "../HOC/http";
-
 import { Link, withRouter } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../../styles/ProfilePage.css";
-
 const BASE_URL = "http://localhost:3002";
-
 class Profile extends Component {
   state = {
     users: [],
@@ -25,11 +22,9 @@ class Profile extends Component {
     loading: true,
     name: "",
   };
-
   componentDidMount = async () => {
     this.fetchData();
   };
-
   fetchData = async () => {
     // 1) mi prendo i miei dati => axiox.get (user / ) <= prenderlo dall'url!!!!
     const usersData = await axios.get(`${BASE_URL}/user`);
@@ -37,7 +32,6 @@ class Profile extends Component {
     const currentUserData = await axios.get(
       `${BASE_URL}/user/${this.props.match.params.id}`
     );
-
     this.setState({
       // experiences: expData,
       users: usersData.data,
@@ -45,13 +39,11 @@ class Profile extends Component {
       loading: false,
     });
   };
-
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.fetchData();
     }
   };
-
   // async fetchExperience() {
   //   let experience = {
   //     method: "GET",
@@ -129,5 +121,4 @@ class Profile extends Component {
     );
   }
 }
-
 export default withRouter(Profile);

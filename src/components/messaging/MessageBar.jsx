@@ -7,8 +7,10 @@ import io from "socket.io-client";
 
 const connOpt = {
   transports: ["websocket"],
-};
-let socket = io("http://localhost:3002", connOpt);
+  query: "token=" + localStorage["accessToken"]
+}
+let socket = io("http://localhost:3002", connOpt)
+
 
 export class MessageBar extends Component {
   constructor(props) {
@@ -17,9 +19,11 @@ export class MessageBar extends Component {
       connections: [],
       bottom: 0,
       showChatbox: false,
-      recipientName: "",
-      senderUsername: "",
-      recipientUsername: "2505mcxWdR3W-DkOAAAC",
+      senderID: "",
+      senderToken: "",
+      senderSocketID: "",
+      recipientID: "",
+      recipientUsername: "",
       message: "",
       messages: [],
       check: true,
@@ -36,24 +40,29 @@ export class MessageBar extends Component {
   }
 
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3002/profile`);
+    // Setting the username of the current user logged into the application
+    this.setCurrentLogged_id()
 
+    let response = await fetch(`http://localhost:3002/user`)
     let parsedJson = await response.json();
-    parsedJson.forEach((element) => {
-      const base64 = this.bufferToBase64(element.image.data);
-      element.image = base64;
-    });
+    console.log(parsedJson)
 
     this.setState({ connections: parsedJson });
-    let messagesResponse = await fetch("http://localhost:3002");
+
+    const token = localStorage.getItem("accessToken")
+    this.setState({
+      senderToken: token,
+      senderSocketID: socket.id
+    })    
+
+    // Messages
+    let messagesResponse = await fetch("http://localhost:3002/messages/");
 
     let messages = await messagesResponse.json();
-    console.log(messages);
-    this.setState({ messages });
+    console.log("Thise are the messages: ", messages);
+    this.setState({ messages: messages });
 
     socket.on("connect", () => {
-      console.log("connected!");
-      alert("connected");
     });
 
     socket.emit("setUsername", {
@@ -68,6 +77,23 @@ export class MessageBar extends Component {
     );
   };
 
+  // Insert the live messages displayng function
+  componentDidUpdate = async() => {
+
+  }
+
+  // Set the _id of the current logged user (senderID)
+  setCurrentLogged_id = async() => {
+    const token = localStorage.getItem("accessToken")
+    const response = await fetch("http://localhost:3002/user/bytoken" + token)
+    const parsedResponse = await response.json()
+    console.log("The username is : " + parsedResponse._id)
+    this.setState({
+      senderID: parsedResponse._id
+    })
+  }
+
+
   handleMessaging = () => {
     if (this.state.bottom === 0) {
       this.setState({ bottom: -245 });
@@ -76,13 +102,33 @@ export class MessageBar extends Component {
     }
   };
 
-  openChatbox = (name) => {
-    this.setState({ showChatbox: true, recipientName: name });
-  };
+
+  openChatbox = (name, username) => {
+    this.setState(
+      { 
+        showChatbox: true, 
+        recipientName: name, 
+        recipientUsername: username 
+      }
+    );
+
+    const setCurrentOpenChat_id = async() => {
+      const response = await fetch("http://localhost:3002/user/" + this.state.recipientUsername)
+      const parsedResponse = await response.json()
+      console.log(parsedResponse._id)
+      this.setState({
+        recipientID: parsedResponse._id
+    })
+  }
+
+  this.setCurrentLogged_id()
+};
 
   closeChatbox = () => {
     this.setState({ showChatbox: false, recipientName: "" });
   };
+
+
 
   updateMessage = (e) => {
     this.setState({ message: e.currentTarget.value });
@@ -90,11 +136,9 @@ export class MessageBar extends Component {
 
   sendMessage = (e) => {
     e.preventDefault();
-    this.setState({ senderUsername: socket.id });
     if (this.state.message !== "") {
-      console.log(this.state.senderUsername);
       socket.emit("privateMessage", {
-        from: this.state.senderUsername,
+        from: this.state.senderToken,
         to: this.state.recipientUsername,
         text: this.state.message,
       });
@@ -124,7 +168,7 @@ export class MessageBar extends Component {
                     src={`data:image/jpeg;base64,${connection.image}`}
                     alt="image"
                   />
-                  <a onClick={() => this.openChatbox(connection.name)}>
+                  <a onClick={() => this.openChatbox(connection.name, connection.username)}>
                     {connection.name}
                   </a>
                 </div>
