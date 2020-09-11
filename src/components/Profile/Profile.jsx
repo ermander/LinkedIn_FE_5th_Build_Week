@@ -6,14 +6,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../NavBar";
 import Experiences from "./Experiences";
 //import axios from "axios";
-import axios from "axios";
-
+import axios from "../HOC/http";
 import { Link, withRouter } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../../styles/ProfilePage.css";
-
 const BASE_URL = "http://localhost:3002";
-
 class Profile extends Component {
   state = {
     users: [],
@@ -25,36 +22,28 @@ class Profile extends Component {
     loading: true,
     name: "",
   };
-
   componentDidMount = async () => {
     this.fetchData();
   };
-
   fetchData = async () => {
     // 1) mi prendo i miei dati => axiox.get (user / ) <= prenderlo dall'url!!!!
-    const usersData = await axios.get(`${BASE_URL}/user/`);
-    console.log(usersData)
+    const usersData = await axios.get(`${BASE_URL}/user`);
     // 2) fetchare le exp
     const currentUserData = await axios.get(
       `${BASE_URL}/user/${this.props.match.params.id}`
     );
-    console.log("oisdhfosdihf " + currentUserData)
-
     this.setState({
       // experiences: expData,
       users: usersData.data,
       user: currentUserData.data,
       loading: false,
-      show: true
     });
   };
-
   componentDidUpdate = async (prevProps, prevState) => {
     if (this.props.match.params.id !== prevProps.match.params.id) {
       this.fetchData();
     }
   };
-
   // async fetchExperience() {
   //   let experience = {
   //     method: "GET",
@@ -132,5 +121,4 @@ class Profile extends Component {
     );
   }
 }
-
 export default withRouter(Profile);
