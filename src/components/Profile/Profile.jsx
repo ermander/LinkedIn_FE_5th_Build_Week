@@ -11,7 +11,6 @@ import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "../../styles/ProfilePage.css";
-import userData from "../HOC/FetchUsers";
 
 const BASE_URL = "http://localhost:3002";
 
