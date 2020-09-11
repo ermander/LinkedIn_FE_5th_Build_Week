@@ -28,7 +28,7 @@ class Experiences extends Component {
       headers: { Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E") },
       data: expe,
     };
-    // let pic = await axios(postPic);
+
     let exp = await axios(postExp);
   }
 
